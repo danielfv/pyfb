@@ -72,7 +72,7 @@ class FacebookClient(object):
                 params = parse_qs(url.split("?")[1])
                 params = { key: params[key][0] for key in params.keys() }
 
-            response = requests.get(url, data=params)
+            response = requests.get(url.split("?")[0], data=params)
             return response.content
 
     def _make_auth_request(self, path, extra_params=None, **data):
