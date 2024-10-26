@@ -15,5 +15,6 @@ setup(
     packages=['pyfb'],
     install_requires=[
         'simplejson',
+        'requests',
     ],
 )

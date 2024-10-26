@@ -4,6 +4,8 @@
 
 from . import auth
 from .utils import Json2ObjectsFactory
+import requests
+
 try:
     #python 3
     from urllib.parse import parse_qsl, urlencode
@@ -56,12 +58,16 @@ class FacebookClient(object):
         if not data:
             data = None
         else:
-            try:
-                data = data.encode("utf-8")
-            except:
-                pass
+            pass
+            #try:
+            #    data = data.encode("utf-8")
+            #except:
+            #    pass
 
-        return urlopen(url, data).read()
+        if data:
+            return requests.get(url).content
+        else:
+            return requests.post(url, data=data).content
 
     def _make_auth_request(self, path, extra_params=None, **data):
         """
@@ -84,7 +90,7 @@ class FacebookClient(object):
             url = "%s&%s" % (url, extra_params)
 
         if data:
-            post_data = urlencode(data)
+            post_data = data
         else:
             post_data = None
 
