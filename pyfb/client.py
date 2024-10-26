@@ -12,7 +12,7 @@ try:
     from urllib.request import urlopen
 except:
     #python 2
-    from urlparse import parse_qsl
+    from urlparse import parse_qsl, parse_qs
     from urllib import urlencode, urlopen
 
 import json
@@ -65,9 +65,14 @@ class FacebookClient(object):
             #    pass
 
         if data:
-            return requests.get(url).content
-        else:
             return requests.post(url, data=data).content
+        else:
+            params={}
+            if "?" in url:
+                params = parse_qs(url.split("?")[1])
+                params = { key: params[key][0] for key in params.keys() }
+
+            return requests.get(url, data=params).content
 
     def _make_auth_request(self, path, extra_params=None, **data):
         """
