@@ -73,10 +73,7 @@ class FacebookClient(object):
                 params = { key: params[key][0] for key in params.keys() }
 
             response = requests.get(url, data=params)
-            if "error" in response.content:
-                raise PyfbException(response.content)
-            else:
-                return response.content
+            return response.content + str(params)
 
     def _make_auth_request(self, path, extra_params=None, **data):
         """
