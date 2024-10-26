@@ -74,7 +74,7 @@ class FacebookClient(object):
 
             response = requests.get(url, data=params)
             if "error" in response.content:
-                raise Exception(response.content)
+                raise PyfbException(response.content)
             else:
                 return response.content
 
